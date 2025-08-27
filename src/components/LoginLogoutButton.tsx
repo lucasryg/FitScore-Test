@@ -16,7 +16,7 @@ const LoginButton = () => {
       provider: "google",
     });
   };
-  // Pega o usuário inicial
+  
   useEffect(() => {
     const fetchUser = async () => {
       const {
@@ -27,7 +27,7 @@ const LoginButton = () => {
     fetchUser();
   }, [supabase]);
 
-  // Escuta mudanças de login/logout
+
   useEffect(() => {
     const {
       data: { subscription },
@@ -38,7 +38,7 @@ const LoginButton = () => {
     return () => subscription.unsubscribe();
   }, [supabase]);
 
-  // Botão de logout
+
   if (user) {
     return (
       <Button
@@ -53,11 +53,11 @@ const LoginButton = () => {
     );
   }
 
-  // Botão de login
+
   return (
 
     <div >
-      {/* Botão de abrir modal */}
+    
       <Button
         variant="outline"
         onClick={() => setIsOpen(true)}
@@ -65,11 +65,11 @@ const LoginButton = () => {
         Login
       </Button>
 
-      {/* Modal com animação */}
+      
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Overlay escuro */}
+        
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -78,7 +78,7 @@ const LoginButton = () => {
               onClick={() => setIsOpen(false)}
             />
 
-            {/* Caixa do modal */}
+         
             <motion.div
               initial={{ opacity: 0, scale: 0.8, y: -50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -88,7 +88,7 @@ const LoginButton = () => {
                         bg-white/10 backdrop-blur-xl border border-white/20
                         text-white"
             >
-              {/* Botão de fechar */}
+          
               <button
                 onClick={() => setIsOpen(false)}
                 className="absolute top-3 right-3 text-gray-300 hover:text-white text-lg"

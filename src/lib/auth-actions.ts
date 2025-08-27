@@ -10,14 +10,11 @@ export async function signout(router:any) {
   
   const { error } = await supabase.auth.signOut();
 
-  const { data: { user } } = await supabase.auth.getUser();
 
   if (error) {
-    console.log(error);
     redirect("/error");
   }
 
-  console.log("usuario depois do logour>:", user)
   redirect("/");
 
 }
