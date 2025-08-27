@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
+import { User } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
 
 type Candidato = {
@@ -11,7 +12,7 @@ type Candidato = {
 };
 
 export default function Dashboard() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [candidatos, setCandidatos] = useState<Candidato[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -60,7 +61,7 @@ export default function Dashboard() {
   type Classification = {
     label: string;
     color: string;
-    group: string; 
+    group: string;
   };
 
   const getClassification = (score: number): Classification => {

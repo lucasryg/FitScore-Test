@@ -3,7 +3,7 @@ import { createClient } from "@/utils/supabase/client";
 import React, { useEffect, useState } from "react";
 
 const UserGreetText = () => {
-const [user, setUser] = useState<{ [key: string]: any } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const supabase = createClient();
 
   // Escuta mudanças de login/logout

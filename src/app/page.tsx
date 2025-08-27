@@ -5,11 +5,12 @@ import { ClipboardCheck, BarChart3 } from "lucide-react";
 import LightRays from "../../ReactBits/LightRays/LightRays";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
+import { User } from "@supabase/supabase-js";
 
 export default function Home() {
 
   const supabase = createClient();
-const [user, setUser] = useState<{ [key: string]: any } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {

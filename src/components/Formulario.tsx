@@ -35,7 +35,7 @@ const perguntas: Pergunta[] = [
 ];
 
 export default function FitScoreForm() {
-    const [user, setUser] = useState<{ [key: string]: any } | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [fase, setFase] = useState<"" | "perguntas" | "resultado">("perguntas");
     const [respostas, setRespostas] = useState<Scores>({
         performance: [],

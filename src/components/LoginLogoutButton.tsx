@@ -4,11 +4,12 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { AnimatePresence, motion } from "motion/react";
+import { User } from "@supabase/supabase-js";
 
 const LoginButton = () => {
   const [isOpen, setIsOpen] = useState(Boolean);
 
-  const [user, setUser] = useState<{ [key: string]: any } | null>(null);
+ const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
