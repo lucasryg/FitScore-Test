@@ -1,60 +1,69 @@
 "use client";
+import React, { useEffect, useState } from "react";
+import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useState } from "react";
 
-export default function LoginPage() {
-
-
-  const [isOpen, setIsOpen] = useState(false);
-
+const LoginButton = () => {
+  const [isOpen, setIsOpen] = useState(Boolean);
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
   const supabase = createClient();
+
   const handleGoogleLogin = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
     });
   };
-
-  // checa sessão sempre que entrar nessa página
+  // Pega o usuário inicial
   useEffect(() => {
-    const checkUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-
-      if (user) {
-        // checa se já respondeu
-        const { data, error } = await supabase
-          .from("candidatos")
-          .select("id")
-          .eq("email", user.email)
-          .maybeSingle();
-
-        if (error) {
-          console.error("Erro ao buscar respostas:", error);
-          return;
-        }
-
-        if (data) {
-          // já respondeu
-          window.location.href = "/resultados";
-        } else {
-          // ainda não respondeu
-          window.location.href = "/formulario";
-        }
-      }
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      setUser(user);
     };
+    fetchUser();
+  }, [supabase]);
 
-    checkUser();
-  }, []);
+  // Escuta mudanças de login/logout
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
 
+    return () => subscription.unsubscribe();
+  }, [supabase]);
+
+  // Botão de logout
+  if (user) {
+    return (
+      <Button
+        onClick={async () => {
+          await supabase.auth.signOut();
+          setUser(null); // força o estado local
+          router.push("/"); // redireciona pra home
+        }}
+      >
+        Log out
+      </Button>
+    );
+  }
+
+  // Botão de login
   return (
-    <div className="relative w-full h-screen flex items-center justify-center bg-black text-white">
+
+    <div >
       {/* Botão de abrir modal */}
-      <button
+      <Button
+        variant="outline"
         onClick={() => setIsOpen(true)}
-        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg shadow-lg"
       >
         Login
-      </button>
+      </Button>
 
       {/* Modal com animação */}
       <AnimatePresence>
@@ -92,7 +101,7 @@ export default function LoginPage() {
               <button
                 onClick={handleGoogleLogin}
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white/90 hover:bg-white rounded-lg font-medium text-black transition-all duration-200" >
-                  Faça login com Google <img src="/google-logo.png" alt="Google Logo" className="w-5 h-5"/>
+                Faça login com Google <img src="/google-logo.png" alt="Google Logo" className="w-5 h-5" />
               </button>
 
             </motion.div>
@@ -100,17 +109,8 @@ export default function LoginPage() {
         )}
       </AnimatePresence>
     </div>
-  );
-  {/* </div>
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-900 to-purple-900 text-white">
-            <h1 className="text-4xl font-bold mb-6">FITSCORE</h1>
-            <p className="mb-4">Faça login para continuar</p>
-            <button
-                onClick={handleGoogleLogin}
-                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-medium text-white hover:from-blue-700 hover:to-purple-700 transition-all duration-200"
-            >
-                Entrar com Google
-            </button>
-        </div> */}
 
-}
+  );
+};
+
+export default LoginButton;
