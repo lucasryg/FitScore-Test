@@ -38,7 +38,7 @@ const UserGreetText = () => {
     </div>
   ) : (
     <div className="flex justify-center sm:justify-start w-full sm:w-auto">
-      <p className="flex justify-center items-center border border-gray-300 text-white from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit rounded-xl lg:bg-gray-200 lg:p-3 lg:dark:bg-zinc-800/30 px-3 py-2 text-sm">
+      <p className="flex justify-center items-center border border-gray-300 bg-white/80 dark:bg-zinc-800/80 backdrop-blur-sm rounded-xl px-3 py-2 text-sm shadow-sm">
         Olá, visitante!
       </p>
     </div>
