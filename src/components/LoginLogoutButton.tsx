@@ -7,7 +7,8 @@ import { AnimatePresence, motion } from "motion/react";
 
 const LoginButton = () => {
   const [isOpen, setIsOpen] = useState(Boolean);
-  const [user, setUser] = useState<any>(null);
+
+  const [user, setUser] = useState<{ [key: string]: any } | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
@@ -16,7 +17,7 @@ const LoginButton = () => {
       provider: "google",
     });
   };
-  
+
   useEffect(() => {
     const fetchUser = async () => {
       const {
@@ -57,7 +58,7 @@ const LoginButton = () => {
   return (
 
     <div >
-    
+
       <Button
         variant="outline"
         onClick={() => setIsOpen(true)}
@@ -65,11 +66,11 @@ const LoginButton = () => {
         Login
       </Button>
 
-      
+
       <AnimatePresence>
         {isOpen && (
           <>
-        
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -78,7 +79,7 @@ const LoginButton = () => {
               onClick={() => setIsOpen(false)}
             />
 
-         
+
             <motion.div
               initial={{ opacity: 0, scale: 0.8, y: -50 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -88,7 +89,7 @@ const LoginButton = () => {
                         bg-white/10 backdrop-blur-xl border border-white/20
                         text-white"
             >
-          
+
               <button
                 onClick={() => setIsOpen(false)}
                 className="absolute top-3 right-3 text-gray-300 hover:text-white text-lg"
@@ -101,7 +102,7 @@ const LoginButton = () => {
               <button
                 onClick={handleGoogleLogin}
                 className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white/90 hover:bg-white rounded-lg font-medium text-black transition-all duration-200" >
-                Faça login com Google <img src="/google-logo.png" alt="Google Logo" className="w-5 h-5" />
+                Faça login com Google
               </button>
 
             </motion.div>

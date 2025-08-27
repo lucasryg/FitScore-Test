@@ -35,7 +35,7 @@ const perguntas: Pergunta[] = [
 ];
 
 export default function FitScoreForm() {
-    const [user, setUser] = useState<any>(null);
+    const [user, setUser] = useState<{ [key: string]: any } | null>(null);
     const [fase, setFase] = useState<"" | "perguntas" | "resultado">("perguntas");
     const [respostas, setRespostas] = useState<Scores>({
         performance: [],
@@ -158,21 +158,21 @@ export default function FitScoreForm() {
                                 <p>1 = Muito Insatisfeito | 5 = Muito Satisfeito</p>
                             </div>
 
-                        <div className="grid grid-cols-5 gap-2 text-center text-xs text-gray-400 mb-6">
-                            <div>Mínimo</div>
-                            <div>Baixo</div>
-                            <div>Neutro</div>
-                            <div>Alto</div>
-                            <div>Máximo</div>
+                            <div className="grid grid-cols-5 gap-2 text-center text-xs text-gray-400 mb-6">
+                                <div>Mínimo</div>
+                                <div>Baixo</div>
+                                <div>Neutro</div>
+                                <div>Alto</div>
+                                <div>Máximo</div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="text-center text-sm text-blue-300">
-                    <p>Esta avaliação nos ajuda a entender melhor suas habilidades e experiência.</p>
-                    <p>Seja honesto em suas respostas - não há respostas certas ou erradas.</p>
+                    <div className="text-center text-sm text-blue-300">
+                        <p>Esta avaliação nos ajuda a entender melhor suas habilidades e experiência.</p>
+                        <p>Seja honesto em suas respostas - não há respostas certas ou erradas.</p>
+                    </div>
                 </div>
-            </div>
             </div >
         );
     }
@@ -200,7 +200,7 @@ export default function FitScoreForm() {
                             </div>
 
                             <h2 className="text-2xl font-bold mb-4">Avaliação Concluída! 🎉</h2>
-                            <p className="text-lg mb-2">Obrigado, <span className="text-blue-300">{user.user_metadata.full_name}</span>!</p>
+                            <p className="text-lg mb-2">Obrigado, <span className="text-blue-300">{user?.user_metadata.full_name}</span>!</p>
 
                             <div className="my-6">
                                 <p className="text-sm text-gray-400 mb-2">Seu FitScore é:</p>
@@ -218,7 +218,7 @@ export default function FitScoreForm() {
                             </div>
 
                             <p className="text-gray-300 text-sm mb-6">
-                                Em breve você receberá um relatório detalhado no e-mail <span className="text-blue-300">{user.email}</span>
+                                Em breve você receberá um relatório detalhado no e-mail <span className="text-blue-300">{user?.email}</span>
                             </p>
 
                             <button

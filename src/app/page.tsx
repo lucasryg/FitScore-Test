@@ -6,10 +6,10 @@ import LightRays from "../../ReactBits/LightRays/LightRays";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
-
 export default function Home() {
+
   const supabase = createClient();
-  const [user, setUser] = useState<any>(null);
+const [user, setUser] = useState<{ [key: string]: any } | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {

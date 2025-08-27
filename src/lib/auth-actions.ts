@@ -5,20 +5,6 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 
-export async function signout(router:any) {
-  const supabase = await createClient();
-  
-  const { error } = await supabase.auth.signOut();
-
-
-  if (error) {
-    redirect("/error");
-  }
-
-  redirect("/");
-
-}
-
 export async function signInWithGoogle() {
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -38,28 +24,6 @@ export async function signInWithGoogle() {
 
   redirect(data.url);
 }
-
-// export async function SalvarCandidato(formData: FormData) {
-//   const supabase = await createClient();
-
-
-
-//   const data = {
-//     nome: Users.user_metadata.full_name,
-//     email: formData.get("email") as string,
-//     performance: formData.get("performance") as string,
-//     energia: formData.get("energia") as string,
-//     cultura: formData.get("cultura") as string,
-//     score_final: formData.get("score_final") as string,
-//   };
-//   const { error } = await supabase.from("candidatos").insert([data]);
-
-//   if (error) {
-//     console.log(error);
-//     redirect("/error");
-//   }
-
-// }
 
 export async function salvarResultado(fitScore: number) {
   const supabase = await createClient();
@@ -88,11 +52,10 @@ export async function verificarSeJaRespondeu(email: string) {
     .single();
 
   if (error && error.code !== "PGRST116") {
-    // qualquer erro inesperado (não "not found")
     console.error("Erro ao verificar respostas:", error);
     throw error;
   }
 
-  return !!data; // true se já respondeu, false se não
+  return !!data;
 }
 
