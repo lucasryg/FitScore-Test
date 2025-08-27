@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 
 export default function Home() {
-
   const supabase = createClient();
   const [user, setUser] = useState<User | null>(null);
 
@@ -33,7 +32,7 @@ export default function Home() {
   }, [supabase]);
 
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden">
+    <div className="relative w-full min-h-screen bg-black overflow-hidden">
 
       <div className="absolute inset-0 z-0">
         <LightRays
@@ -50,61 +49,61 @@ export default function Home() {
         />
       </div>
 
+      <div className="relative z-10 flex flex-col items-center min-h-screen text-center px-4 py-8 md:p-6">
 
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center p-6">
-
-        <div className="z-10 w-full max-w-7xl flex items-center justify-between font-mono text-sm">
+     
+        <div className="absolute top-6 left-0 right-0 z-10 w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between font-mono text-sm px-4 gap-4">
           <UserGreetText />
-          <LoginButton />
-        </div>
-
-
-        <h1 className="text-5xl font-extrabold mb-6 text-amber-50 tracking-tight">
-          Bem-vindo ao <span className="text-blue-400">FitScore</span>
-        </h1>
-        <p className="mb-8 text-lg text-gray-300 max-w-xl">
-          Transforme avaliações de candidatos em <span className="text-blue-400">insights claros</span>.<br />
-          Crie testes rápidos e acompanhe resultados em tempo real.
-        </p>
-
-
-        <div className="flex gap-8 mb-10 text-gray-300">
-          <div className="flex flex-col items-center">
-            <ClipboardCheck className="h-10 w-10 text-blue-400 mb-2" />
-            <span className="text-sm">Formulário simples</span>
+          <div className="flex justify-center sm:justify-end w-full sm:w-auto">
+            <LoginButton />
           </div>
-          {user ? (
-            <div className="flex flex-col items-center">
-              <BarChart3 className="h-10 w-10 text-purple-400 mb-2" />
-              <a href="/dashboard" className="text-sm">Dashboard intuitivo</a>
-            </div>
-          )
-            : (
-              <div className="flex flex-col items-center">
-                <BarChart3 className="h-10 w-10 text-purple-400 mb-2" />
-                <span className="text-sm">Dashboard intuitivo</span>
-              </div>
-            )}
-
         </div>
 
+      
+        <div className="flex-1 flex flex-col items-center justify-center w-full max-w-4xl mt-16">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 md:mb-6 text-amber-50 tracking-tight">
+            Bem-vindo ao <span className="text-blue-400">FitScore</span>
+          </h1>
+          
+          <p className="mb-6 md:mb-8 text-base md:text-lg text-gray-300 max-w-xl px-4">
+            Transforme avaliações de candidatos em <span className="text-blue-400">insights claros</span>.<br />
+            Crie testes rápidos e acompanhe resultados em tempo real.
+          </p>
 
-        <div className="flex gap-4">
-          {user ? (
-            <a
-              href="/resultados"
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 text-white font-semibold rounded-xl shadow-lg transition"
-            >
-              🚀 Faça o teste!
-            </a>
-          ) : (
-            <button
-              disabled
-              className="px-6 py-3 bg-gray-400 text-white font-semibold rounded-xl shadow-lg cursor-not-allowed"
-            >
-              🔒 Faça login para continuar
-            </button>
-          )}
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 mb-8 md:mb-10 text-gray-300">
+            <div className="flex flex-col items-center">
+              <ClipboardCheck className="h-8 w-8 md:h-10 md:w-10 text-blue-400 mb-2" />
+              <span className="text-xs md:text-sm">Formulário simples</span>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <BarChart3 className="h-8 w-8 md:h-10 md:w-10 text-blue-400 mb-2" />
+              {user ? (
+                <a href="/dashboard" className="text-xs md:text-sm hover:underline">Dashboard intuitivo</a>
+              ) : (
+                <span className="text-xs md:text-sm">Dashboard intuitivo</span>
+              )}
+            </div>
+          </div>
+
+         
+          <div className="flex gap-4">
+            {user ? (
+              <a
+                href="/resultados"
+                className="px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 text-white font-semibold rounded-xl shadow-lg transition text-sm md:text-base"
+              >
+                🚀 Faça o teste!
+              </a>
+            ) : (
+              <button
+                disabled
+                className="px-5 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-700 to-blue-500 text-white font-semibold rounded-xl shadow-lg cursor-not-allowed text-sm md:text-base opacity-80"
+              >
+                🔒 Faça login para continuar
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

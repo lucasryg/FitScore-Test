@@ -8,17 +8,6 @@ const UserGreetText = () => {
   const supabase = createClient();
 
   useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, [supabase]);
-
-
-  useEffect(() => {
     const fetchUser = async () => {
       const {
         data: { user },
@@ -28,23 +17,31 @@ const UserGreetText = () => {
     fetchUser();
   }, [supabase]);
 
+  useEffect(() => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [supabase]);
+
   return user ? (
-    <p
-      className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 
-      backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
-    >
-      hello&nbsp;
-      <code className="font-mono font-bold">
-        {user.user_metadata.full_name ?? "user"}!
-      </code>
-    </p>
+    <div className="flex justify-center sm:justify-start w-full sm:w-auto">
+      <p className="flex justify-center items-center border border-gray-300 bg-gradient-to-b from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit rounded-xl lg:bg-gray-200 lg:p-3 lg:dark:bg-zinc-800/30 px-3 py-2 text-sm">
+        Olá,&nbsp;
+        <code className="font-mono font-bold">
+          {user.user_metadata.full_name || "usuário"}!
+        </code>
+      </p>
+    </div>
   ) : (
-    <p
-      className="fixed left-0  w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl 
-      dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30"
-    >
-      Olá, visitante!
-    </p>
+    <div className="flex justify-center sm:justify-start w-full sm:w-auto">
+      <p className="flex justify-center items-center border border-gray-300 text-white from-zinc-200 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit rounded-xl lg:bg-gray-200 lg:p-3 lg:dark:bg-zinc-800/30 px-3 py-2 text-sm">
+        Olá, visitante!
+      </p>
+    </div>
   );
 };
 
