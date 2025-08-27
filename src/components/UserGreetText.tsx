@@ -1,12 +1,12 @@
 "use client";
 import { createClient } from "@/utils/supabase/client";
+import { User } from "@supabase/supabase-js";
 import React, { useEffect, useState } from "react";
 
 const UserGreetText = () => {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClient();
 
-  // Escuta mudanças de login/logout
   useEffect(() => {
     const {
       data: { subscription },
@@ -17,7 +17,7 @@ const UserGreetText = () => {
     return () => subscription.unsubscribe();
   }, [supabase]);
 
-  // Pega usuário inicial
+
   useEffect(() => {
     const fetchUser = async () => {
       const {
